@@ -1,12 +1,18 @@
 package irctc.app;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Queue;
 
 public class TicketService {
+	static Long pNRNo=001L;
 	static Integer seatNumber = 1;
 	static List<PassengerDto> confirmedTicketList = new ArrayList<>();// Total-63
-	static int upperBirth = 1, middleBirth = 0, lowerBirth = 0;// seats 63 % 3 = 21
+	static Queue<PassengerDto> waitingListQueue= new LinkedList<>();
+	static Queue<PassengerDto> rACQueue=new LinkedList<>();
+	static int upperBirth = 1, middleBirth = 1, lowerBirth = 1;// seats 63 % 3 = 21
 
 	public static String bookTicket(PassengerDto passengerDto) {
 		if(lowerBirth != 0||middleBirth != 0||upperBirth != 0) {
@@ -38,11 +44,28 @@ public class TicketService {
 			}
 
 		}
+		passengerDto.setpNRNo(pNRNo++);
 		confirmedTicketList.add(passengerDto);
 		return "Ticket Confirmed";
 		}else {	
-			
+			passengerDto.setStatus("RAC");
+			rACQueue.add(passengerDto);
 		return "No Ticket Available";
 		}
+	}
+	
+	public static String cancelTicket(Long pnrNo) {
+		Optional<PassengerDto> psgOptional=confirmedTicketList.stream().filter(obj->obj.getpNRNo().equals(pnrNo)).findFirst();
+		if(!psgOptional.isEmpty()) {
+			PassengerDto passengerDto=psgOptional.get();
+			confirmedTicketList.remove(passengerDto);
+			return "TicketCancelled";
+		}else {
+			return "InvalidPNR-No";
+		}
+	}
+	
+	public static List<PassengerDto> viewTickets(){
+		return confirmedTicketList;
 	}
 }
