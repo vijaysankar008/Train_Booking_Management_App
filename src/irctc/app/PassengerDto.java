@@ -1,7 +1,7 @@
 package irctc.app;
 
 public class PassengerDto {
-
+	private Long pNRNo;
 	private String name;
 	private int age;
 	private String gender;
@@ -69,10 +69,19 @@ public class PassengerDto {
 		this.status = status;
 	}
 
+	public Long getpNRNo() {
+		return pNRNo;
+	}
+
+	public void setpNRNo(Long pNRNo) {
+		this.pNRNo = pNRNo;
+	}
+
 	@Override
 	public String toString() {
-		return "PassengerDto [name=" + name + ", age=" + age + ", gender=" + gender + ", preferBirth=" + preferBirth
-				+ ", seatNumber=" + seatNumber + ", status=" + status + "]";
+		return "PassengerDto [pNRNo=" + pNRNo + ", name=" + name + ", age=" + age + ", gender=" + gender
+				+ ", preferBirth=" + preferBirth + ", seatNumber=" + seatNumber + ", status=" + status + "]";
 	}
+	
 	
 }
