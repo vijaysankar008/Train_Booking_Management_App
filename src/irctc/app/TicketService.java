@@ -12,7 +12,7 @@ public class TicketService {
 	static List<PassengerDto> confirmedTicketList = new ArrayList<>();// Total-63
 	static Queue<PassengerDto> waitingListQueue= new LinkedList<>();
 	static Queue<PassengerDto> rACQueue=new LinkedList<>();
-	static int upperBirth = 1, middleBirth = 1, lowerBirth = 1;// seats 63 % 3 = 21
+	static int upperBirth = 0, middleBirth = 0, lowerBirth = 1,rACBirth=1;// seats 63 % 3 = 21
 
 	public static String bookTicket(PassengerDto passengerDto) {
 		if(lowerBirth != 0||middleBirth != 0||upperBirth != 0) {
@@ -47,11 +47,13 @@ public class TicketService {
 		passengerDto.setpNRNo(pNRNo++);
 		confirmedTicketList.add(passengerDto);
 		return "Ticket Confirmed";
-		}else {	
+		}else if(rACBirth!=0) {	
 			passengerDto.setStatus("RAC");
+			passengerDto.setSeatNumber("1RAC");
 			rACQueue.add(passengerDto);
-		return "No Ticket Available";
-		}
+		return "RAC Ticket Available";
+		}else
+			return "No Ticket Available";
 	}
 	
 	public static String cancelTicket(Long pnrNo) {

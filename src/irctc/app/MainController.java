@@ -36,7 +36,12 @@ public class MainController {
 				break;
 			}
 			case 3:{//3.View Ticket
-				System.out.println(TicketService.viewTickets());
+				System.out.println("Confirmed Ticket List"+TicketService.viewTickets());
+				System.out.println("RAC Ticket List"+TicketService.rACQueue);
+				break;
+			}
+			case 4:{//Exit
+				System.out.println("**********Thanks for Choosing IRCTC***********");
 				break;
 			}
 			}
